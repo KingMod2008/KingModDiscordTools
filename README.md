@@ -7,6 +7,7 @@ Welcome to **XkingTool**, a powerful and feature-rich suite of tools designed fo
 - [✨ Features](#-features)
 - [🚀 Getting Started](#-getting-started)
 - [🛠️ Usage](#️-usage)
+- [🐍 Programmatic Usage](#-programmatic-usage)
 - [🤝 Contributing](#-contributing)
 - [⚠️ Disclaimer](#️-disclaimer)
 - [📄 License](#-license)
@@ -75,6 +76,47 @@ Alternatively, you can use the main GUI application:
 ```bash
 python KingMod.py
 ```
+
+## 🐍 Programmatic Usage
+
+While the tools are designed with a GUI, you can also use the core logic in your own Python scripts. Here's an example of how you could get information about a webhook programmatically:
+
+```python
+import requests
+
+def get_webhook_info(webhook_url):
+    """
+    Fetches and prints information about a Discord webhook.
+
+    :param webhook_url: The URL of the webhook to inspect.
+    """
+    try:
+        response = requests.get(webhook_url)
+        response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+
+        data = response.json()
+        print("🎉 Webhook Information Retrieved Successfully! 🎉")
+        print("="*40)
+        print(f"  Name: {data.get('name', 'N/A')}")
+        print(f"  Avatar URL: {data.get('avatar', 'N/A')}")
+        print(f"  Channel ID: {data.get('channel_id', 'N/A')}")
+        print(f"  Guild ID: {data.get('guild_id', 'N/A')}")
+        print(f"  Token: {data.get('token', 'N/A')}")
+        print("="*40)
+
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Error fetching webhook information: {e}")
+    except ValueError:
+        print("❌ Error: Invalid JSON response from the server.")
+
+if __name__ == "__main__":
+    # Replace with your webhook URL
+    example_webhook_url = "https://discord.com/api/webhooks/your/webhook/url"
+    get_webhook_info(example_webhook_url)
+
+```
+
+This example uses the `requests` library to send a GET request to the webhook URL and prints the information, similar to how the `webhook_info.py` tool works.
 
 ## 🤝 Contributing
 
